@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
+<script src="./assets/wa-widget.js" defer></script>
 </head>
 <body>
 <x-dc>
@@ -100,7 +101,7 @@
       <p style="font-size: 19px; line-height: 1.7; font-weight: 300; color: rgba(255,255,255,0.85); margin: 0 0 44px 0; max-width: 52ch;">{{ heroSubtitulo }}</p>
       <div style="display: flex; gap: 16px;">
         <a href="#practicas" style="display: inline-block; background: #FFFFFF; color: #001F3F; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; padding: 16px 32px; pointer-events: auto;" style-hover="background: #9FB3C8; color: #001F3F;">NUESTRAS PRÁCTICAS</a>
-        <a href="#contacto" style="display: inline-block; border: 1px solid rgba(255,255,255,0.5); color: #FFFFFF; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; padding: 16px 32px; pointer-events: auto;" style-hover="border-color: #FFFFFF; background: rgba(255,255,255,0.08); color: #FFFFFF;">CONTÁCTANOS</a>
+        <a href="{{ waCita }}" target="_blank" rel="noopener noreferrer" style="display: inline-block; border: 1px solid rgba(255,255,255,0.5); color: #FFFFFF; font-size: 13px; font-weight: 600; letter-spacing: 0.14em; padding: 16px 32px; pointer-events: auto;" style-hover="border-color: #FFFFFF; background: rgba(255,255,255,0.08); color: #FFFFFF;">CONTÁCTANOS</a>
       </div>
     </div>
   </div>
@@ -143,7 +144,7 @@
     </div>
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;">
       <sc-for list="{{ practicas }}" as="p" hint-placeholder-count="3">
-        <a href="#contacto" style="display: block; background: #001F3F; padding: 48px 40px 44px 40px; min-height: 300px; position: relative;" style-hover="background: #0A2E52;">
+        <a href="{{ p.wa }}" target="_blank" rel="noopener noreferrer" style="display: block; background: #001F3F; padding: 48px 40px 44px 40px; min-height: 300px; position: relative;" style-hover="background: #0A2E52;">
           <div style="font-family: Georgia, serif; font-size: 30px; color: rgba(255,255,255,0.35); margin-bottom: 24px;">{{ p.num }}</div>
           <h3 style="font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-size: 26px; line-height: 1.25; color: #FFFFFF; margin: 0 0 16px 0;">{{ p.titulo }}</h3>
           <p style="font-size: 15px; line-height: 1.7; font-weight: 300; color: rgba(255,255,255,0.75); margin: 0 0 28px 0;">{{ p.descripcion }}</p>
@@ -238,8 +239,107 @@
   </div>
 </section>
 
-<!-- ===================== CONTACTO / FOOTER ===================== -->
-<footer id="contacto" data-screen-label="Contacto" style="background: #001F3F; padding: 100px 32px 0 32px;">
+<!-- ===================== CONTACTO ===================== -->
+<section id="contacto" data-screen-label="Contacto" style="background: #FFFFFF; padding: 110px 32px;">
+  <div style="max-width: 1280px; margin: 0 auto;">
+    <div style="margin-bottom: 56px;">
+      <div style="font-size: 12px; letter-spacing: 0.32em; font-weight: 600; color: #5A6B7E; margin-bottom: 20px;">CONTACTO</div>
+      <h2 style="font-family: Georgia, 'Times New Roman', serif; font-weight: 400; font-size: 40px; margin: 0 0 18px 0; color: #001F3F;">Conversemos sobre tu caso</h2>
+      <p style="font-size: 17px; line-height: 1.85; font-weight: 400; color: #1E3550; margin: 0; max-width: 62ch;">Completa el formulario y se abrirá WhatsApp con tu consulta lista para enviar. También puedes escribirnos o llamarnos directamente.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: start;">
+
+      <!-- Formulario -->
+      <form onSubmit="{{ enviarFormulario }}" noValidate="true">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 22px;">
+          <div>
+            <label for="tv-nombre" style="display: block; font-size: 11.5px; letter-spacing: 0.18em; font-weight: 700; color: #5A6B7E; margin-bottom: 8px;">NOMBRE COMPLETO *</label>
+            <input id="tv-nombre" type="text" value="{{ f.nombre }}" onChange="{{ setNombre }}" autocomplete="name" style="width: 100%; box-sizing: border-box; font-family: inherit; font-size: 15px; font-weight: 400; color: #001F3F; background: #FFFFFF; border: 1px solid #D8DCE2; padding: 13px 14px;">
+            <sc-if value="{{ err.nombre }}">
+              <div style="font-size: 12.5px; color: #B3261E; margin-top: 6px;">{{ err.nombre }}</div>
+            </sc-if>
+          </div>
+          <div>
+            <label for="tv-telefono" style="display: block; font-size: 11.5px; letter-spacing: 0.18em; font-weight: 700; color: #5A6B7E; margin-bottom: 8px;">TELÉFONO *</label>
+            <input id="tv-telefono" type="tel" value="{{ f.telefono }}" onChange="{{ setTelefono }}" autocomplete="tel" style="width: 100%; box-sizing: border-box; font-family: inherit; font-size: 15px; font-weight: 400; color: #001F3F; background: #FFFFFF; border: 1px solid #D8DCE2; padding: 13px 14px;">
+            <sc-if value="{{ err.telefono }}">
+              <div style="font-size: 12.5px; color: #B3261E; margin-top: 6px;">{{ err.telefono }}</div>
+            </sc-if>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-bottom: 22px;">
+          <div>
+            <label for="tv-correo" style="display: block; font-size: 11.5px; letter-spacing: 0.18em; font-weight: 700; color: #5A6B7E; margin-bottom: 8px;">CORREO ELECTRÓNICO</label>
+            <input id="tv-correo" type="email" value="{{ f.correo }}" onChange="{{ setCorreo }}" autocomplete="email" style="width: 100%; box-sizing: border-box; font-family: inherit; font-size: 15px; font-weight: 400; color: #001F3F; background: #FFFFFF; border: 1px solid #D8DCE2; padding: 13px 14px;">
+            <sc-if value="{{ err.correo }}">
+              <div style="font-size: 12.5px; color: #B3261E; margin-top: 6px;">{{ err.correo }}</div>
+            </sc-if>
+          </div>
+          <div>
+            <label for="tv-materia" style="display: block; font-size: 11.5px; letter-spacing: 0.18em; font-weight: 700; color: #5A6B7E; margin-bottom: 8px;">MATERIA DE LA CONSULTA *</label>
+            <select id="tv-materia" value="{{ f.materia }}" onChange="{{ setMateria }}" style="width: 100%; box-sizing: border-box; font-family: inherit; font-size: 15px; font-weight: 400; color: #001F3F; background: #FFFFFF; border: 1px solid #D8DCE2; padding: 13px 14px;">
+              <option value="">Selecciona una materia</option>
+              <sc-for list="{{ materias }}" as="mat" hint-placeholder-count="4">
+                <option value="{{ mat }}">{{ mat }}</option>
+              </sc-for>
+            </select>
+            <sc-if value="{{ err.materia }}">
+              <div style="font-size: 12.5px; color: #B3261E; margin-top: 6px;">{{ err.materia }}</div>
+            </sc-if>
+          </div>
+        </div>
+        <div style="margin-bottom: 22px;">
+          <div style="font-size: 11.5px; letter-spacing: 0.18em; font-weight: 700; color: #5A6B7E; margin-bottom: 10px;">MODALIDAD DE ATENCIÓN *</div>
+          <div style="display: flex; gap: 26px; align-items: center; flex-wrap: wrap;">
+            <label style="display: flex; align-items: center; gap: 9px; font-size: 15px; color: #1E3550; cursor: pointer;">
+              <input type="radio" name="tv-modalidad" value="Virtual" checked="{{ f.esVirtual }}" onChange="{{ setModalidad }}" style="accent-color: #001F3F; width: 17px; height: 17px; margin: 0;">Virtual
+            </label>
+            <label style="display: flex; align-items: center; gap: 9px; font-size: 15px; color: #1E3550; cursor: pointer;">
+              <input type="radio" name="tv-modalidad" value="Presencial" checked="{{ f.esPresencial }}" onChange="{{ setModalidad }}" style="accent-color: #001F3F; width: 17px; height: 17px; margin: 0;">Presencial
+            </label>
+          </div>
+          <sc-if value="{{ err.modalidad }}">
+            <div style="font-size: 12.5px; color: #B3261E; margin-top: 6px;">{{ err.modalidad }}</div>
+          </sc-if>
+        </div>
+        <div style="margin-bottom: 28px;">
+          <label for="tv-mensaje" style="display: block; font-size: 11.5px; letter-spacing: 0.18em; font-weight: 700; color: #5A6B7E; margin-bottom: 8px;">MENSAJE *</label>
+          <textarea id="tv-mensaje" rows="5" value="{{ f.mensaje }}" onChange="{{ setMensaje }}" style="width: 100%; box-sizing: border-box; font-family: inherit; font-size: 15px; font-weight: 400; line-height: 1.6; color: #001F3F; background: #FFFFFF; border: 1px solid #D8DCE2; padding: 13px 14px; resize: vertical;"></textarea>
+          <sc-if value="{{ err.mensaje }}">
+            <div style="font-size: 12.5px; color: #B3261E; margin-top: 6px;">{{ err.mensaje }}</div>
+          </sc-if>
+        </div>
+        <button type="submit" style="display: inline-block; background: #001F3F; color: #FFFFFF; font-family: inherit; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; padding: 16px 32px; border: 0; cursor: pointer;" style-hover="background: #0A2E52;">ENVIAR POR WHATSAPP</button>
+        <p style="font-size: 12.5px; line-height: 1.7; color: #5A6B7E; margin: 16px 0 0 0;">Al enviar se abrirá WhatsApp en una pestaña nueva con tu mensaje redactado. No almacenamos tus datos en este sitio.</p>
+      </form>
+
+      <!-- Oficina y mapa -->
+      <div>
+        <div style="background: #F4F5F7; padding: 36px 32px;">
+          <div style="font-size: 11.5px; letter-spacing: 0.22em; font-weight: 700; color: #5A6B7E; margin-bottom: 18px;">NUESTRA OFICINA</div>
+          <p style="font-size: 15px; line-height: 1.8; font-weight: 400; color: #1E3550; margin: 0 0 22px 0;">Jr. Santa Rosa (Ex Miró Quesada) 376<br>Cercado de Lima, Lima, Perú</p>
+          <div style="font-size: 11.5px; letter-spacing: 0.22em; font-weight: 700; color: #5A6B7E; margin-bottom: 12px;">TELÉFONOS</div>
+          <p style="font-size: 15px; line-height: 1.9; font-weight: 400; color: #1E3550; margin: 0 0 22px 0;">
+            <a href="tel:+51905505420" style="color: #001F3F;" style-hover="color: #4A6A8F;">+51 905 505 420</a><br>
+            <a href="tel:+51921551735" style="color: #001F3F;" style-hover="color: #4A6A8F;">+51 921 551 735</a><br>
+            <a href="tel:+51930901494" style="color: #001F3F;" style-hover="color: #4A6A8F;">+51 930 901 494</a>
+          </p>
+          <div style="font-size: 11.5px; letter-spacing: 0.22em; font-weight: 700; color: #5A6B7E; margin-bottom: 12px;">CORREO</div>
+          <p style="font-size: 15px; line-height: 1.8; margin: 0 0 22px 0;">
+            <a href="mailto:contacto@ttupavargas.com" style="color: #001F3F; border-bottom: 1px solid rgba(0,31,63,0.35);" style-hover="color: #4A6A8F;">contacto@ttupavargas.com</a>
+          </p>
+          <div style="font-size: 11.5px; letter-spacing: 0.22em; font-weight: 700; color: #5A6B7E; margin-bottom: 12px;">HORARIO DE ATENCIÓN</div>
+          <p style="font-size: 15px; line-height: 1.8; font-weight: 400; color: #1E3550; margin: 0;">Lunes a viernes, 9:00 – 18:00</p>
+        </div>
+        <iframe title="Mapa de ubicación de Ttupa Vargas Estudio de Abogados: Jr. Santa Rosa 376, Cercado de Lima" src="https://www.google.com/maps?q=Jr.+Santa+Rosa+376,+Cercado+de+Lima,+Lima,+Per%C3%BA&amp;output=embed" loading="lazy" referrerPolicy="no-referrer-when-downgrade" style="width: 100%; height: 260px; border: 0; border-radius: 4px; display: block; margin-top: 22px;"></iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer data-screen-label="Footer" style="background: #001F3F; padding: 100px 32px 0 32px;">
   <div style="max-width: 1280px; margin: 0 auto;">
     <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 64px; padding-bottom: 80px; border-bottom: 1px solid rgba(255,255,255,0.18);">
       <div>
@@ -261,7 +361,7 @@
         </div>
       </div>
     </div>
-    <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 28px 0; flex-wrap: wrap;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 28px 0 96px 0; flex-wrap: wrap;">
       <div style="font-size: 12.5px; color: rgba(255,255,255,0.6);">Copyright © 2026 — Ttupa Vargas Estudio de Abogados</div>
       <div style="display: flex; gap: 24px;">
         <a href="aviso-legal.html" style="font-size: 12.5px; color: rgba(255,255,255,0.6);" style-hover="color: #FFFFFF;">Aviso Legal</a>
@@ -279,7 +379,12 @@
   &quot;autoRotarTestimonios&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Testimonios&quot; }
 }">
 class Component extends DCLogic {
-  state = { testimonioIdx: 0, visible: true };
+  state = {
+    testimonioIdx: 0,
+    visible: true,
+    form: { nombre: '', telefono: '', correo: '', materia: '', modalidad: '', mensaje: '' },
+    errors: {},
+  };
 
   componentDidMount() {
     this.startAuto();
@@ -316,21 +421,86 @@ class Component extends DCLogic {
     ];
   }
 
+  areas() {
+    return [
+      { num: '01', titulo: 'Derecho Penal y Económico', descripcion: 'Constitución de empresas, contratos, gobierno corporativo y acompañamiento legal permanente para tu negocio.' },
+      { num: '02', titulo: 'Solución de Controversias', descripcion: 'Litigios, arbitraje y negociación. Defendemos tus intereses con estrategia y firmeza en cada instancia.' },
+      { num: '03', titulo: 'Fintech y Activos Virtuales', descripcion: 'Procedimientos ante entidades públicas, regulación sectorial y contrataciones con el Estado.' },
+    ];
+  }
+
+  waLink(mensaje) {
+    return 'https://wa.me/51905505420?text=' + encodeURIComponent(mensaje);
+  }
+
+  setCampo(campo, valor) {
+    this.setState({
+      form: { ...this.state.form, [campo]: valor },
+      errors: { ...this.state.errors, [campo]: '' },
+    });
+  }
+
+  validar(f) {
+    const e = {};
+    const correo = f.correo.trim();
+    if (!f.nombre.trim()) e.nombre = 'Ingresa tu nombre completo.';
+    if (!f.telefono.trim()) e.telefono = 'Ingresa un teléfono de contacto.';
+    else if (!/^[0-9+()\s-]{6,}$/.test(f.telefono.trim())) e.telefono = 'Ingresa un teléfono válido (mínimo 6 dígitos).';
+    if (correo && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) e.correo = 'Ingresa un correo electrónico válido.';
+    if (!f.materia) e.materia = 'Selecciona la materia de tu consulta.';
+    if (!f.modalidad) e.modalidad = 'Selecciona una modalidad de atención.';
+    if (!f.mensaje.trim()) e.mensaje = 'Cuéntanos brevemente tu consulta.';
+    return e;
+  }
+
+  enviar(ev) {
+    ev.preventDefault();
+    const f = this.state.form;
+    const errors = this.validar(f);
+    if (Object.keys(errors).length > 0) {
+      this.setState({ errors });
+      return;
+    }
+    const correo = f.correo.trim() || 'no indicado';
+    const cuerpo = f.mensaje.trim();
+    const cierre = /[.!?]$/.test(cuerpo) ? '' : '.';
+    const mensaje = 'Hola, soy ' + f.nombre.trim() + '. Quisiera agendar una cita ' +
+      f.modalidad.toLowerCase() + ' sobre ' + f.materia + '. Mensaje: ' + cuerpo + cierre +
+      ' Mi teléfono es ' + f.telefono.trim() + ' y mi correo ' + correo + '.';
+    window.open(this.waLink(mensaje), '_blank', 'noopener,noreferrer');
+  }
+
   renderVals() {
     const p = this.props;
     const ts = this.testimonios();
     const t = ts[this.state.testimonioIdx];
+    const areas = this.areas();
+    const form = this.state.form;
     return {
       heroTitulo: p.heroTitulo ?? 'Asesoría legal con visión estratégica',
       heroSubtitulo: p.heroSubtitulo ?? 'Construimos soluciones jurídicas a la medida de cada cliente, con rigor técnico, transparencia y compromiso con el resultado.',
       statAnios: p.statAnios ?? '10+',
       statClientes: p.statClientes ?? '200+',
       statCasos: p.statCasos ?? '500+',
-      practicas: [
-        { num: '01', titulo: 'Derecho Penal y Económico', descripcion: 'Constitución de empresas, contratos, gobierno corporativo y acompañamiento legal permanente para tu negocio.' },
-        { num: '02', titulo: 'Solución de Controversias', descripcion: 'Litigios, arbitraje y negociación. Defendemos tus intereses con estrategia y firmeza en cada instancia.' },
-        { num: '03', titulo: 'Fintech y Activos Virtuales', descripcion: 'Procedimientos ante entidades públicas, regulación sectorial y contrataciones con el Estado.' },
-      ],
+      practicas: areas.map((a) => ({
+        ...a,
+        wa: this.waLink('Hola, quisiera una consulta sobre ' + a.titulo + '. ¿Podríamos agendar una cita?'),
+      })),
+      waCita: this.waLink('Hola, quisiera agendar una cita para una consulta legal. ¿Tienen disponibilidad para atención virtual o presencial?'),
+      materias: areas.map((a) => a.titulo).concat(['Otro']),
+      f: {
+        ...form,
+        esVirtual: form.modalidad === 'Virtual',
+        esPresencial: form.modalidad === 'Presencial',
+      },
+      err: this.state.errors,
+      setNombre: (e) => this.setCampo('nombre', e.target.value),
+      setTelefono: (e) => this.setCampo('telefono', e.target.value),
+      setCorreo: (e) => this.setCampo('correo', e.target.value),
+      setMateria: (e) => this.setCampo('materia', e.target.value),
+      setModalidad: (e) => this.setCampo('modalidad', e.target.value),
+      setMensaje: (e) => this.setCampo('mensaje', e.target.value),
+      enviarFormulario: (e) => this.enviar(e),
       equipo: [
         { foto: 'assets/equipo-gabriel-ttupa.webp', nombre: 'Gabriel Ttupa', cargo: 'SOCIO FUNDADOR', bio: 'Especialista en derecho penal y penal económico, con experiencia en asesoría y litigios de alta complejidad en la defensa de accionistas, ejecutivos y directivos de empresas nacionales e internacionales. Cuenta con experiencia en asesoría en  derecho corporativo, fintech y activos digitales y solución de controversias.' },
         { foto: 'assets/equipo-jaime-vargas.webp', nombre: 'Jaime Vargas', cargo: 'SOCIO FUNDADOR', bio: 'Especialista en derecho civil y comercial, con enfoque en asesoría a personas naturales y empresas en los sectores minero, agrario, farmacéutico e infraestructura. Cuenta con experiencia en asesoría en derecho laboral individual y económico, negociaciones colectivas, y derecho previsional.' },
