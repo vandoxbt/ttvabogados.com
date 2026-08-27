@@ -468,7 +468,7 @@ class Component extends DCLogic {
 
   startAuto() {
     clearInterval(this.timer);
-    if (this.props.autoRotarTestimonios ?? true) {
+    if ((this.props.autoRotarTestimonios ?? true) && this.testimonios().length) {
       this.timer = setInterval(() => this.next(), 6000);
     }
   }
@@ -481,6 +481,7 @@ class Component extends DCLogic {
 
   next() {
     const n = this.testimonios().length;
+    if (!n) return;
     this.goTo((this.state.testimonioIdx + 1) % n);
   }
 
@@ -542,7 +543,7 @@ class Component extends DCLogic {
   renderVals() {
     const p = this.props;
     const ts = this.testimonios();
-    const t = ts[this.state.testimonioIdx];
+    const t = ts[this.state.testimonioIdx] || { texto: '', fuente: '' };
     const areas = this.areas();
     const form = this.state.form;
     return {
