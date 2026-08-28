@@ -93,9 +93,12 @@
 <!-- ===================== HERO ===================== -->
 <section id="inicio" data-screen-label="Hero" style="background: #001F3F; min-height: 76vh; display: grid; grid-template-rows: minmax(58vh, 1fr) auto; position: relative; overflow: hidden;">
   <div style="position: absolute; inset: 0;">
-    <img src="assets/hero-bg.webp" alt="" style="width: 100%; height: 100%; object-fit: cover; object-position: center 45%; display: block;">
+    <picture style="display: block; width: 100%; height: 100%;">
+      <source media="(max-width: 767px)" srcSet="assets/HERO-oficina-movil.webp">
+      <img src="assets/HERO-oficina-general.webp" alt="" style="width: 100%; height: 100%; object-fit: cover; object-position: center 45%; display: block;">
+    </picture>
   </div>
-  <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,31,63,0.88) 0%, rgba(0,31,63,0.30) 34%, rgba(0,31,63,0.30) 58%, rgba(0,31,63,0.94) 100%); pointer-events: none;"></div>
+  <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,31,63,0.38) 0%, rgba(0,31,63,0.06) 34%, rgba(0,31,63,0.10) 58%, rgba(0,31,63,0.58) 100%); pointer-events: none;"></div>
   <div style="grid-row: 2; max-width: 1280px; width: 100%; box-sizing: border-box; margin: 0 auto; padding: 0 32px 72px 32px; position: relative; pointer-events: none;">
     <div style="animation: tvFadeUp 0.9s ease both; max-width: 720px;">
       <div style="font-size: 16px; letter-spacing: 0.26em; font-weight: 600; color: #9FB3C8; margin-bottom: 24px">DETENCIONES Y REQUISITORIAS EN LIMA &middot; ATENCIÓN 24 HORAS</div>
